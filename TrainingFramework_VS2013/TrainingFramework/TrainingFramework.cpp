@@ -23,9 +23,9 @@ int Init ( ESContext *esContext )
 	verticesData[0].pos.x =  0.0f;  verticesData[0].pos.y =  0.5f;  verticesData[0].pos.z =  0.0f;
 	verticesData[0].color.w = 1.0f; verticesData[0].color.x = 0.0f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.0f;
 	verticesData[1].pos.x = -0.5f;  verticesData[1].pos.y = -0.5f;  verticesData[1].pos.z =  0.0f;
-	verticesData[1].color.w = 0.0f; verticesData[1].color.x = 1.0f; verticesData[1].color.y = 0.0f; verticesData[1].color.z = 0.0f;
+	verticesData[1].color.w = 0.0f; verticesData[1].color.x = 1.0f; verticesData[1].color.y = 0.0f; verticesData[1].color.z = 1.0f;
 	verticesData[2].pos.x =  0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z =  0.0f;
-	verticesData[2].color.w = 0.0f; verticesData[2].color.x = 0.0f; verticesData[2].color.y = 1.0f; verticesData[2].color.z = 0.0f;
+	verticesData[2].color.w = 0.0f; verticesData[2].color.x = 0.0f; verticesData[2].color.y = 1.0f; verticesData[2].color.z = 1.0f;
 
 	//buffer object
 	glGenBuffers(1, &vboId);
@@ -50,11 +50,15 @@ void Draw ( ESContext *esContext )
 	glUseProgram(myShaders.program);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
-	
 	glEnableVertexAttribArray(myShaders.positionAttribute);
 	glVertexAttribPointer(myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	glEnableVertexAttribArray(myShaders.positionAttribute);
-	glVertexAttribPointer(myShaders.colorAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*) 0 + sizeof(Vector3));
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, vboId);
+	glEnableVertexAttribArray(myShaders.colorAttribute);
+	glVertexAttribPointer(myShaders.colorAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*) (0 + sizeof(Vector3)));
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
 	
@@ -62,8 +66,6 @@ void Draw ( ESContext *esContext )
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
 //	glDrawArrays(GL_TRIANGLES, 0, 3);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
