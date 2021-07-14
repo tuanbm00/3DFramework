@@ -1,1 +1,15 @@
-﻿  Utilities.vcxproj -> D:\20202\20203\3DFramework\TrainingFramework_VS2013\Debug\Utilities.lib
+﻿cl : Command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  stdafx.cpp
+cl : Command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  esUtil_win.cpp
+  esUtil.cpp
+  esShader.cpp
+  TGA.cpp
+  MemoryOperators.cpp
+  MemoryManager.cpp
+  Math.cpp
+d:\20202\20203\3dframework\trainingframework_vs2013\utilities\math.cpp(10): warning C4244: 'return': conversion from 'double' to 'GLfloat', possible loss of data
+d:\20202\20203\3dframework\trainingframework_vs2013\utilities\math.cpp(104): warning C4244: 'return': conversion from 'double' to 'GLfloat', possible loss of data
+d:\20202\20203\3dframework\trainingframework_vs2013\utilities\math.cpp(208): warning C4244: 'return': conversion from 'double' to 'GLfloat', possible loss of data
+  Generating Code...
+  Utilities.vcxproj -> D:\20202\20203\3DFramework\TrainingFramework_VS2013\Debug\Utilities.lib
