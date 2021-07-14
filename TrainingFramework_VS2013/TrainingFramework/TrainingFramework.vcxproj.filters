@@ -30,6 +30,12 @@
     <ClCompile Include="TrainingFramework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -50,6 +56,9 @@
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\Shaders\TriangleShaderFS.fs">
@@ -59,9 +68,18 @@
       <Filter>Resources\Shaders</Filter>
     </None>
     <None Include="..\Readme.doc" />
+    <None Include="..\Resources\sarah.nfg">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Woman2.nfg">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\Woman1.tga">
+    <Image Include="..\Resources\sarah.tga">
+      <Filter>Resources\Shaders</Filter>
+    </Image>
+    <Image Include="..\Resources\Woman2.tga">
       <Filter>Resources</Filter>
     </Image>
   </ItemGroup>
