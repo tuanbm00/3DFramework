@@ -1,14 +1,3 @@
 ﻿cl : Command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  Model.cpp
-d:\20202\20203\3dframework\trainingframework_vs2013\trainingframework\model.cpp(16): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(208): note: see declaration of 'fopen'
-d:\20202\20203\3dframework\trainingframework_vs2013\trainingframework\model.cpp(18): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(1197): note: see declaration of 'fscanf'
-d:\20202\20203\3dframework\trainingframework_vs2013\trainingframework\model.cpp(25): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(1197): note: see declaration of 'fscanf'
-d:\20202\20203\3dframework\trainingframework_vs2013\trainingframework\model.cpp(33): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(1197): note: see declaration of 'fscanf'
-d:\20202\20203\3dframework\trainingframework_vs2013\trainingframework\model.cpp(38): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(1197): note: see declaration of 'fscanf'
-d:\20202\20203\3dframework\trainingframework_vs2013\trainingframework\model.cpp(40): warning C4715: 'Model::Init': not all control paths return a value
+  Object.cpp
   TrainingFramework.vcxproj -> D:\20202\20203\3DFramework\TrainingFramework_VS2013\\BIN\TrainingFramework.exe

@@ -39,6 +39,9 @@ void Object::Init(char* fileTexture, char* fileModel) {
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
+	delete[] m_model.indices;
+	delete[] m_model.vertices;
+
 	m_shaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 }
 
