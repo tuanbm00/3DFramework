@@ -1,10 +1,4 @@
 ﻿cl : Command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  TrainingFramework.cpp
-d:\20202\20203\3dframework\trainingframework_vs2013\trainingframework\trainingframework.cpp(79): warning C4129: '%': unrecognized character escape sequence
-d:\20202\20203\3dframework\trainingframework_vs2013\trainingframework\trainingframework.cpp(80): warning C4129: '%': unrecognized character escape sequence
   Camera.cpp
-d:\20202\20203\3dframework\trainingframework_vs2013\trainingframework\camera.cpp(165): warning C4129: '%': unrecognized character escape sequence
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  Object.cpp
+d:\20202\20203\3dframework\trainingframework_vs2013\trainingframework\camera.cpp(163): warning C4129: '%': unrecognized character escape sequence
   TrainingFramework.vcxproj -> D:\20202\20203\3DFramework\TrainingFramework_VS2013\\BIN\TrainingFramework.exe
