@@ -121,6 +121,7 @@
     <None Include="..\Resources\Shaders\TriangleShaderFS.fs" />
     <None Include="..\Resources\Shaders\TriangleShaderVS.vs" />
     <None Include="..\Readme.doc" />
+    <None Include="..\Resources\Woman1.nfg" />
     <None Include="..\Resources\Woman2.nfg" />
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +131,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Resources\Woman1.tga" />
     <Image Include="..\Resources\Woman2.tga" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

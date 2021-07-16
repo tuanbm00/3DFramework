@@ -86,9 +86,15 @@
     <None Include="..\Resources\Woman2.nfg">
       <Filter>Resources</Filter>
     </None>
+    <None Include="..\Resources\Woman1.nfg">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resources\Woman2.tga">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\Woman1.tga">
       <Filter>Resources</Filter>
     </Image>
   </ItemGroup>

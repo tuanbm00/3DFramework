@@ -9,19 +9,30 @@
 #include "Globals.h"
 #include "Model.h"
 #include "Object.h"
+#include "Camera.h"
 #include <conio.h>
 #include <iostream>
 
-Object obj;
+Object obj1, obj2;
 
 int Init ( ESContext *esContext )
 {	
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 	glEnable(GL_DEPTH_TEST);
-	obj.SetPosition(-0.4f, -0.8f, 0.0f);
-	obj.SetScale(0.5f, 0.8f, 0.5f);
-	obj.SetRotation(0.0f, 200.0f, 0.0f);
-	obj.Init("..\\Resources\\Woman2.tga", "..\\Resources\\Woman2.nfg");
+	Camera::GetInstance()->Init(1.0f, 0.1f, 500.0f);
+	Camera::GetInstance()->SetPosition(0.0f, 0.0f, 4.0f);
+	Camera::GetInstance()->SetTarget(0.0f, 0.0f, 0.0f);
+	Camera::GetInstance()->SetUp(0.0f, 1.0f, 0.0f);
+
+	obj1.SetPosition(-0.4f, -0.8f, 0.0f);
+	obj1.SetScale(0.5f, 0.8f, 0.5f);
+	obj1.SetRotation(0.0f, 100.0f, 0.0f);
+	obj1.Init("..\\Resources\\Woman1.tga", "..\\Resources\\Woman1.nfg");
+	
+	obj2.SetPosition(0.4f, -0.8f, 0.0f);
+	obj2.SetScale(0.5f, 0.8f, 0.5f);
+	obj2.SetRotation(0.0f, 200.0f, 0.0f);
+	obj2.Init("..\\Resources\\Woman2.tga", "..\\Resources\\Woman2.nfg");
 	return 0;
 
 }
@@ -29,23 +40,56 @@ int Init ( ESContext *esContext )
 void Draw ( ESContext *esContext )
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	obj.Draw();
+	obj1.Draw();
+	obj2.Draw();
 	eglSwapBuffers ( esContext->eglDisplay, esContext->eglSurface );
 }
 
 void Update ( ESContext *esContext, float deltaTime )
 {
-
+	Camera::GetInstance()->Update(deltaTime);
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 {
-
+	switch (key)
+	{
+	case 'W':
+	case 'w':
+		Camera::GetInstance()->Move('w');
+		break;
+	case 'S':
+	case 's':
+		Camera::GetInstance()->Move('s');
+		break;
+	case 'A':
+	case 'a':
+		Camera::GetInstance()->Move('a');
+		break;
+	case 'D':
+	case 'd':
+		Camera::GetInstance()->Move('d');
+		break;
+	/*case '\&':
+		Camera::GetInstance()->Move('\&');
+		break;
+	case '\(':
+		Camera::GetInstance()->Move('\(');
+		break;*/
+	case '\%':
+		Camera::GetInstance()->Move('\%');
+		break;
+	case '\'':
+		Camera::GetInstance()->Move('\'');
+		break;
+	}
 }
 
 void CleanUp()
 {
-	obj.CleanUp();
+	obj1.CleanUp();
+	obj2.CleanUp();
+	Camera::GetInstance()->CleanUp();
 }
 
 int _tmain(int argc, _TCHAR* argv[])

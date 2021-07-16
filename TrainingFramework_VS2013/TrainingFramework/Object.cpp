@@ -23,9 +23,7 @@ void Object::SetRotation(float x, float y, float z) {
 }
 
 void Object::Init(char* fileTexture, char* fileModel) {
-	m_texture.Init(fileTexture);
 	m_model.Init(fileModel);
-	IntMVP();
 	glGenBuffers(1, &vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
 	glBufferData(GL_ARRAY_BUFFER, m_model.numOfVertices * sizeof(Vertex), m_model.vertices, GL_STATIC_DRAW);
@@ -38,7 +36,8 @@ void Object::Init(char* fileTexture, char* fileModel) {
 
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
-
+	m_texture.Init(fileTexture);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	delete[] m_model.indices;
 	delete[] m_model.vertices;
 
@@ -57,32 +56,30 @@ void Object::IntMVP() {
 	translationMatrix.SetTranslation(m_position.x, m_position.y, m_position.z);
 	m_worldMatrix = scaleMatrix * rotationMatrix * translationMatrix;
 	
-	m_WVP = m_worldMatrix * viewMatrix * perspective;
+	m_WVP = m_worldMatrix * Camera::GetInstance()->GetViewMatrix() * Camera::GetInstance()->GetPerspective();
 }
 
 void Object::Draw() {
+	IntMVP();
 	glUseProgram(m_shaders.program);
-
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 	glUniform1i(m_shaders.uniformLocation, 0);
-	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
 	glEnableVertexAttribArray(m_shaders.positionAttribute);
 	glVertexAttribPointer(m_shaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vboId);
 	glEnableVertexAttribArray(m_shaders.uvAttribute);
 	glVertexAttribPointer(m_shaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*)(0 + sizeof(Vector3)*4));
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	glEnableVertexAttribArray(m_shaders.mvpUniform);
-	glUniformMatrix4fv(m_shaders.mvpUniform, 1, GL_FALSE, (GLfloat*) m_worldMatrix.m);
+	glUniformMatrix4fv(m_shaders.mvpUniform, 1, GL_FALSE, (GLfloat*) m_WVP.m);
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
 	glDrawElements(GL_TRIANGLES, m_model.numOfIndices, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 

@@ -3,6 +3,7 @@
 #include "Shaders.h"
 #include "Texture.h"
 #include "Model.h"
+#include "Camera.h"
 #include "../Utilities/utilities.h"
 
 #define PI 3.1459f
@@ -30,8 +31,8 @@ public:
 	void SetScale(float x, float y, float z);
 	void SetRotation(float x, float y, float z);
 	void Init(char* fileTexture, char* fileModel);
-	void IntMVP();
 	void Draw();
+	void IntMVP();
 	void CleanUp();
 	void Update(float deltaTime);
 };
