@@ -17,7 +17,6 @@ void Camera::Init(float m_fov, float m_near, float m_far) {
 	m_FOV = m_fov;
 	m_Near = m_near;
 	m_Far = m_far;
-	m_speed = 20.0f;
 	m_move = Vector3(0, 0, 0);
 	m_rotFlag = 0.0f;
 }
@@ -34,12 +33,17 @@ void Camera::SetUp(float x, float y, float z) {
 	m_up = Vector3(x, y, z);
 }
 
+void Camera::SetSpeed(float move_speed, float rot_speed) {
+	m_move_speed = move_speed;
+	m_rot_speed = rot_speed;
+}
+
 void Camera::Update(float deltatime) {
-	m_position += m_move * deltatime*m_speed;
-	m_target += m_move * deltatime*m_speed;
+	m_position += m_move * deltatime*m_move_speed;
+	m_target += m_move * deltatime*m_move_speed;
 	m_move = Vector3(0, 0, 0);
 	Vector4 localTarget = Vector4(0, 0, -(m_position - m_target).Length(), 1);
-	localTarget = localTarget * RotationMatrixAroundY(m_rotFlag*deltatime*m_speed);
+	localTarget = localTarget * RotationMatrixAroundY(m_rotFlag*deltatime*m_rot_speed);
 	localTarget = localTarget * GetWorldMatrix();
 	m_target.x = localTarget.x;
 	m_target.y = localTarget.y;
@@ -155,10 +159,10 @@ void Camera::Move(char key) {
 		m_move = (m_position - m_target).Normalize();
 	}
 	if (key == 'a') {
-		m_move = (m_up.Cross((m_position - m_target).Normalize())).Normalize();
+		m_move = -(m_up.Cross((m_position - m_target).Normalize())).Normalize();
 	}
 	if (key == 'd') {
-		m_move = -(m_up.Cross((m_position - m_target).Normalize())).Normalize();
+		m_move = (m_up.Cross((m_position - m_target).Normalize())).Normalize();
 	}
 	if (key == '\%') {
 		m_rotFlag = 1.0f;

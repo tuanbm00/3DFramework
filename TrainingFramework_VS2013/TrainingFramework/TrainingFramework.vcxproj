@@ -97,6 +97,8 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TrainingFramework.cpp" />
     <ClCompile Include="Shaders.cpp" />
@@ -108,6 +110,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Object.h" />
@@ -118,6 +121,8 @@
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\Shaders\CubeShaderFS.fs" />
+    <None Include="..\Resources\Shaders\CubeShaderVS.vs" />
     <None Include="..\Resources\Shaders\TriangleShaderFS.fs" />
     <None Include="..\Resources\Shaders\TriangleShaderVS.vs" />
     <None Include="..\Readme.doc" />
@@ -131,8 +136,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Resources\back.tga" />
+    <Image Include="..\Resources\bottom.tga" />
+    <Image Include="..\Resources\front.tga" />
+    <Image Include="..\Resources\left.tga" />
+    <Image Include="..\Resources\right.tga" />
+    <Image Include="..\Resources\top.tga" />
     <Image Include="..\Resources\Woman1.tga" />
     <Image Include="..\Resources\Woman2.tga" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Resources\ResourceManager.txt" />
+    <Text Include="..\Resources\SceneManager.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

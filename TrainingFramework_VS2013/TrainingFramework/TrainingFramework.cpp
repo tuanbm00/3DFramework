@@ -10,18 +10,22 @@
 #include "Model.h"
 #include "Object.h"
 #include "Camera.h"
+#include "SceneManager.h"
+#include "ResourceManager.h"
 #include <conio.h>
 #include <iostream>
 
-Object obj1, obj2;
+//Object obj1, obj2, skyBox;
 
 int Init ( ESContext *esContext )
 {	
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 	glEnable(GL_DEPTH_TEST);
-	Camera::GetInstance()->Init(1.0f, 0.1f, 500.0f);
-	Camera::GetInstance()->SetPosition(0.0f, 0.0f, 4.0f);
-	Camera::GetInstance()->SetTarget(0.0f, 0.0f, 0.0f);
+	SceneManager::GetInstance()->Init();
+	ResourceManager::GetInstance()->Init();
+	/*Camera::GetInstance()->Init(1.0f, 0.1f, 500.0f);
+	Camera::GetInstance()->SetPosition(0.0f, 1.0f, 5.0f);
+	Camera::GetInstance()->SetTarget(0.0f, 1.0f, -1.0f);
 	Camera::GetInstance()->SetUp(0.0f, 1.0f, 0.0f);
 
 	obj1.SetPosition(-0.4f, -0.8f, 0.0f);
@@ -33,21 +37,27 @@ int Init ( ESContext *esContext )
 	obj2.SetScale(0.5f, 0.8f, 0.5f);
 	obj2.SetRotation(0.0f, 200.0f, 0.0f);
 	obj2.Init("..\\Resources\\Woman2.tga", "..\\Resources\\Woman2.nfg");
-	return 0;
 
+	skyBox.SetPosition(0.0f, 0.0f, 0.0f);
+	skyBox.SetScale(200.0f, 200.0f, 200.0f);
+	skyBox.SetRotation(0.0f, 0.0f, 0.0f);
+	skyBox.loadCube("..\\Resources\\right.tga", "..\\Resources\\left.tga", "..\\Resources\\top.tga", "..\\Resources\\bottom.tga", "..\\Resources\\front.tga", "..\\Resources\\back.tga");*/
+	return 0;
 }
 
 void Draw ( ESContext *esContext )
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	obj1.Draw();
-	obj2.Draw();
+//	skyBox.Draw();	
+//	obj1.Draw();
+//	obj2.Draw();
+	SceneManager::GetInstance()->Draw();
 	eglSwapBuffers ( esContext->eglDisplay, esContext->eglSurface );
 }
 
 void Update ( ESContext *esContext, float deltaTime )
 {
-	Camera::GetInstance()->Update(deltaTime);
+	SceneManager::GetInstance()->Update(deltaTime);
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
@@ -56,19 +66,19 @@ void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 	{
 	case 'W':
 	case 'w':
-		Camera::GetInstance()->Move('w');
+		SceneManager::GetInstance()->MoveCamera('w');
 		break;
 	case 'S':
 	case 's':
-		Camera::GetInstance()->Move('s');
+		SceneManager::GetInstance()->MoveCamera('s');
 		break;
 	case 'A':
 	case 'a':
-		Camera::GetInstance()->Move('a');
+		SceneManager::GetInstance()->MoveCamera('a');
 		break;
 	case 'D':
 	case 'd':
-		Camera::GetInstance()->Move('d');
+		SceneManager::GetInstance()->MoveCamera('d');
 		break;
 	/*case '\&':
 		Camera::GetInstance()->Move('\&');
@@ -77,19 +87,21 @@ void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 		Camera::GetInstance()->Move('\(');
 		break;*/
 	case '\%':
-		Camera::GetInstance()->Move('\%');
+		SceneManager::GetInstance()->MoveCamera('\%');
 		break;
 	case '\'':
-		Camera::GetInstance()->Move('\'');
+		SceneManager::GetInstance()->MoveCamera('\'');
 		break;
 	}
 }
 
 void CleanUp()
 {
-	obj1.CleanUp();
-	obj2.CleanUp();
-	Camera::GetInstance()->CleanUp();
+//	obj1.CleanUp();
+//	obj2.CleanUp();
+	SceneManager::GetInstance()->CleanUP();
+	ResourceManager::GetInstance()->CleanUp();
+//	Camera::GetInstance()->CleanUp();
 }
 
 int _tmain(int argc, _TCHAR* argv[])

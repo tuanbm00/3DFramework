@@ -1,0 +1,33 @@
+#Models: 2
+ID 0
+FILE ..\\Resources\\Woman1.nfg
+ID 1
+FILE ..\\Resources\\Woman2.nfg
+
+#2D Textures: 2
+ID 0
+FILE ..\\Resources\\Woman1.tga
+WRAP REPEAT
+FILTER LINEAR LINEAR
+ID 1
+FILE ..\\Resources\\Woman2.tga
+WRAP REPEAT
+FILTER LINEAR_LINEAR LINEAR
+
+#Cube Textures: 1
+ID 2
+FILE ..\\Resources\\right.tga , ..\\Resources\\left.tga , ..\\Resources\\top.tga , ..\\Resources\\bottom.tga , ..\\Resources\\front.tga , ..\\Resources\\back.tga
+WRAP CLAMP
+FILTER LINEAR LINEAR
+
+#Shaders: 2
+ID 0
+../Resources/Shaders/TriangleShaderVS.vs
+../Resources/Shaders/TriangleShaderFS.fs
+STATES 1
+GL_DEPTH_TEST 1
+ID 2
+../Resources/Shaders/CubeShaderVS.vs 
+../Resources/Shaders/CubeShaderFS.fs
+STATES 1
+GL_DEPTH_TEST 1

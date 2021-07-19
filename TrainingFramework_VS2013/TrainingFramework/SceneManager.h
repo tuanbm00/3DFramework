@@ -1,8 +1,23 @@
 #pragma once
-#include "Object.h"
 #include <math.h>
+#include "../Utilities/utilities.h"
+#include "Camera.h"
+#include "Object.h"
 
-class SceneManager{
+class SceneManager {
+private:
+	static SceneManager* s_instance;
+	Object *m_listObject;
+	int m_numOfObject;
 public:
-	Object* m_listObject;
+	SceneManager();
+	~SceneManager();
+	void Init();
+	static SceneManager* GetInstance();
+	Object* GetListObject();
+	int GetNumOfObject();
+	void Draw();
+	void CleanUP();
+	void MoveCamera(char key);
+	void Update(float deltatime);
 };

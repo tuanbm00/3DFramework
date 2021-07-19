@@ -9,5 +9,6 @@ public:
 	Texture();
 	~Texture();
 	void Init(char* filename);
+	void loadCube(char* rightfile, char* leftfile, char* topfile, char* botfile, char* frontfile, char* backfile);
 //	static Texture* GetInstance();
 };

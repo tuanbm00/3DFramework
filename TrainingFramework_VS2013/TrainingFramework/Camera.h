@@ -8,7 +8,8 @@ private:
 	float m_FOV;
 	float m_Near;
 	float m_Far;
-	float m_speed;
+	float m_move_speed;
+	float m_rot_speed;
 	float m_rotFlag;
 	Vector3 m_position;
 	Vector3 m_target;
@@ -23,6 +24,7 @@ public:
 	void SetPosition(float x, float y, float z);
 	void SetTarget(float x, float y, float z);
 	void SetUp(float x, float y, float z);
+	void SetSpeed(float m_move_speed, float m_rot_speed);
 	void Update(float deltatime);
 	void Move(char key);
 	void CleanUp();

@@ -42,6 +42,12 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -74,6 +80,9 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\Shaders\TriangleShaderFS.fs">
@@ -89,6 +98,12 @@
     <None Include="..\Resources\Woman1.nfg">
       <Filter>Resources</Filter>
     </None>
+    <None Include="..\Resources\Shaders\CubeShaderFS.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\CubeShaderVS.vs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resources\Woman2.tga">
@@ -97,5 +112,31 @@
     <Image Include="..\Resources\Woman1.tga">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="..\Resources\back.tga">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\bottom.tga">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\front.tga">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\left.tga">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\right.tga">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\top.tga">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Resources\ResourceManager.txt">
+      <Filter>Resources</Filter>
+    </Text>
+    <Text Include="..\Resources\SceneManager.txt">
+      <Filter>Resources</Filter>
+    </Text>
   </ItemGroup>
 </Project>

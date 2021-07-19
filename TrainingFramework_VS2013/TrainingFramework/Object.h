@@ -18,6 +18,7 @@ public:
 	Matrix m_WVP;
 
 	int m_iObjectID;
+	int m_numOfCube;
 	GLuint vboId;
 	GLuint iboId;
 	GLuint textureID;
@@ -27,10 +28,13 @@ public:
 
 	Object();
 	~Object();
+	void SetID(int id);
+	void SetnumOfCube(int numOfCube);
 	void SetPosition(float x, float y, float z);
 	void SetScale(float x, float y, float z);
 	void SetRotation(float x, float y, float z);
 	void Init(char* fileTexture, char* fileModel);
+	void loadCube(char* leftfile, char* rightfile, char* topfile, char* botfile, char* frontfile, char* backfile);
 	void Draw();
 	void IntMVP();
 	void CleanUp();

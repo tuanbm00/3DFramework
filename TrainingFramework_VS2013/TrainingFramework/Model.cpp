@@ -37,4 +37,5 @@ bool Model::Init(char *filename) {
 	{
 		fscanf(file, "   %*d.    %d,    %d,    %d\n", &indices[i], &indices[i + 1], &indices[i + 2]);
 	}
+	fclose(file);
 }
