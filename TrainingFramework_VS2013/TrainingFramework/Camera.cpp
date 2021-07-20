@@ -6,7 +6,12 @@
 Camera* Camera::s_instance = NULL;
 
 Camera::Camera() {
-
+	keyPressed = 0;	
+	m_moveVertical = 0;
+	m_moveHorizontal = 0;
+	m_rotVertical = 0;
+	m_rotHorizontal = 0;
+	m_limitRotVertical = 0;
 }
 
 Camera::~Camera() {
@@ -17,8 +22,6 @@ void Camera::Init(float m_fov, float m_near, float m_far) {
 	m_FOV = m_fov;
 	m_Near = m_near;
 	m_Far = m_far;
-	m_move = Vector3(0, 0, 0);
-	m_rotFlag = 0.0f;
 }
 
 void Camera::SetPosition(float x, float y, float z) {
@@ -39,16 +42,42 @@ void Camera::SetSpeed(float move_speed, float rot_speed) {
 }
 
 void Camera::Update(float deltatime) {
+	CheckMove();
+	Vector3 m_move = Vector3(0, 0, 0);
+	if (m_moveVertical == 1) {
+		m_move += (m_position - m_target).Normalize();
+	} 
+	if (m_moveVertical == -1) {
+		m_move += - (m_position - m_target).Normalize();
+	}
+	if (m_moveHorizontal == 1) {
+		m_move += (m_up.Cross((m_position - m_target).Normalize())).Normalize();
+	}
+	if (m_moveHorizontal == -1) {
+		m_move += -(m_up.Cross((m_position - m_target).Normalize())).Normalize();
+	}
+	
 	m_position += m_move * deltatime*m_move_speed;
 	m_target += m_move * deltatime*m_move_speed;
-	m_move = Vector3(0, 0, 0);
+	
 	Vector4 localTarget = Vector4(0, 0, -(m_position - m_target).Length(), 1);
-	localTarget = localTarget * RotationMatrixAroundY(m_rotFlag*deltatime*m_rot_speed);
+	localTarget = localTarget * RotationMatrixAroundY(m_rotHorizontal*deltatime*m_rot_speed);
 	localTarget = localTarget * GetWorldMatrix();
+
 	m_target.x = localTarget.x;
 	m_target.y = localTarget.y;
-	m_target.y = localTarget.y;
-	m_rotFlag = 0.0f;
+	m_target.z = localTarget.z;
+
+	if (m_limitRotVertical + m_rotVertical * deltatime*m_rot_speed < 1.57f && m_limitRotVertical + m_rotVertical * deltatime*m_rot_speed > -1.57f) {
+		localTarget = Vector4(0, 0, -(m_position - m_target).Length(), 1);
+		localTarget = localTarget * RotationMatrixAroundX(m_rotVertical*deltatime*m_rot_speed);
+		localTarget = localTarget * GetWorldMatrix();
+		m_limitRotVertical += m_rotVertical * deltatime*m_rot_speed;
+
+		m_target.x = localTarget.x;
+		m_target.y = localTarget.y;
+		m_target.z = localTarget.z;
+	}
 }
 
 Camera* Camera::GetInstance() {
@@ -142,33 +171,126 @@ Matrix Camera::GetViewMatrix() {
 	return m_viewMatrix;
 }
 
+Matrix Camera::RotationMatrixAroundX(float angle) {
+	Vector3 xaxis, yaxis, zaxis;
+	zaxis = (m_position - m_target).Normalize();
+	xaxis = (m_up.Cross(zaxis)).Normalize();
+	Vector4 localX = Vector4(xaxis, 0);
+	localX = localX * GetViewMatrix();
+	Matrix rotationAxis;
+	return rotationAxis.SetRotationAngleAxis(angle, localX.x, localX.y, localX.z);
+}
+
 Matrix Camera::RotationMatrixAroundY(float angle) {
 	Vector3 xaxis, yaxis, zaxis;
 	zaxis = (m_position - m_target).Normalize();
 	xaxis = (m_up.Cross(zaxis)).Normalize();
 	yaxis = (zaxis.Cross(xaxis)).Normalize();
+	Vector4 localY = Vector4(yaxis, 0);
+	localY = localY * GetViewMatrix();
 	Matrix rotationAxis;
-	return rotationAxis.SetRotationAngleAxis(angle, yaxis.x, yaxis.y, yaxis.z);
+	return rotationAxis.SetRotationAngleAxis(angle, localY.x, localY.y, localY.z);
 }
 
-void Camera::Move(char key) {
-	if (key == 'w') {
-		m_move = -(m_position - m_target).Normalize();
+void Camera::Move(char key, bool bIsPress) {
+	if (bIsPress) {
+		switch (key) {
+			case 'W':
+			case 'w':
+				keyPressed = keyPressed | MOVE_FRONT;
+				break;
+			case 'S':
+			case 's':
+				keyPressed = keyPressed | MOVE_BACK;
+				break;
+			case 'A':
+			case 'a':
+				keyPressed = keyPressed | MOVE_LEFT;
+				break;
+			case 'D':
+			case 'd':
+				keyPressed = keyPressed | MOVE_RIGHT;
+				break;
+			case '\&':
+				keyPressed = keyPressed | ROTATE_UP;
+				break;
+			case '\(':
+				keyPressed = keyPressed | ROTATE_DOWN;
+				break;
+			case '\%':
+				keyPressed = keyPressed | ROTATE_LEFT;
+				break;
+			case '\'':
+				keyPressed = keyPressed | ROTATE_RIGHT;
+				break;
+		}
 	}
-	if (key == 's') {
-		m_move = (m_position - m_target).Normalize();
+	else {
+		switch (key) {
+		case 'W':
+		case 'w':
+			keyPressed = keyPressed ^ MOVE_FRONT;
+			m_moveVertical = 0;
+			break;
+		case 'S':
+		case 's':
+			keyPressed = keyPressed ^ MOVE_BACK;
+			m_moveVertical = 0;
+			break;
+		case 'A':
+		case 'a':
+			keyPressed = keyPressed ^ MOVE_LEFT;
+			m_moveHorizontal = 0;
+			break;
+		case 'D':
+		case 'd':
+			keyPressed = keyPressed ^ MOVE_RIGHT;
+			m_moveHorizontal = 0;
+			break;
+		case '\&':
+			keyPressed = keyPressed ^ ROTATE_UP;
+			m_rotVertical = 0;
+			break;
+		case '\(':
+			keyPressed = keyPressed ^ ROTATE_DOWN;
+			m_rotVertical = 0;
+			break;
+		case '\%':
+			keyPressed = keyPressed ^ ROTATE_LEFT;
+			m_rotHorizontal = 0;
+			break;
+		case '\'':
+			keyPressed = keyPressed ^ ROTATE_RIGHT;
+			m_rotHorizontal = 0;
+			break;
+		}
 	}
-	if (key == 'a') {
-		m_move = -(m_up.Cross((m_position - m_target).Normalize())).Normalize();
+}
+
+void Camera::CheckMove() {
+	if (keyPressed & MOVE_FRONT) {
+		m_moveVertical = 1.0f;
 	}
-	if (key == 'd') {
-		m_move = (m_up.Cross((m_position - m_target).Normalize())).Normalize();
+	if (keyPressed & MOVE_BACK) {
+		m_moveVertical = -1.0f;
 	}
-	if (key == '\%') {
-		m_rotFlag = 1.0f;
+	if (keyPressed & MOVE_LEFT) {
+		m_moveHorizontal = -1.0f;
 	}
-	if (key == '\'') {
-		m_rotFlag = -1.0f;
+	if (keyPressed & MOVE_RIGHT) {
+		m_moveHorizontal = 1.0f;
+	}
+	if (keyPressed & ROTATE_UP) {
+		m_rotVertical = 1.0f;
+	}
+	if (keyPressed & ROTATE_DOWN) {
+		m_rotVertical = -1.0f;
+	}
+	if (keyPressed & ROTATE_LEFT) {
+		m_rotHorizontal = 1.0f;
+	}
+	if (keyPressed & ROTATE_RIGHT) {
+		m_rotHorizontal = -1.0f;
 	}
 }
 

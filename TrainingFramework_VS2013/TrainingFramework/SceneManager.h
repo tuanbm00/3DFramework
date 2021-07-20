@@ -18,7 +18,7 @@ public:
 	int GetNumOfObject();
 	void Draw();
 	void CleanUP();
-	void MoveCamera(char key);
+	void MoveCamera(char key, bool bIsPressed);
 	void MemoryClear();
 	void Update(float deltatime);
 };

@@ -110,6 +110,6 @@ void SceneManager::Update(float deltatime) {
 	Camera::GetInstance()->Update(deltatime);
 }
 
-void SceneManager::MoveCamera(char key) {
-	Camera::GetInstance()->Move(key);
+void SceneManager::MoveCamera(char key, bool bIsPressed) {
+	Camera::GetInstance()->Move(key, bIsPressed);
 }

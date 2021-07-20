@@ -2,6 +2,16 @@
 #include <math.h>
 #include "../Utilities/utilities.h"
 
+#define MOVE_FRONT 1
+#define MOVE_BACK 1 << 1
+#define MOVE_LEFT 1 << 2
+#define MOVE_RIGHT 1 << 3
+
+#define ROTATE_LEFT 1 << 4
+#define ROTATE_RIGHT 1 << 5
+#define ROTATE_UP 1 << 6
+#define ROTATE_DOWN 1 << 7
+
 class Camera {
 private:
 	static Camera* s_instance;
@@ -10,11 +20,15 @@ private:
 	float m_Far;
 	float m_move_speed;
 	float m_rot_speed;
-	float m_rotFlag;
+	float m_rotVertical;
+	float m_rotHorizontal;
+	float m_moveVertical;
+	float m_moveHorizontal;
+	float m_limitRotVertical;
+	int keyPressed;
 	Vector3 m_position;
 	Vector3 m_target;
 	Vector3 m_up;
-	Vector3 m_move;
 	Matrix m_viewMatrix;
 	Matrix m_worldMatrix;
 public:
@@ -26,11 +40,13 @@ public:
 	void SetUp(float x, float y, float z);
 	void SetSpeed(float m_move_speed, float m_rot_speed);
 	void Update(float deltatime);
-	void Move(char key);
+	void Move(char key, bool bIsPressed);
+	void CheckMove();
 	void CleanUp();
 	static Camera* GetInstance();
 	Matrix GetPerspective();
 	Matrix GetViewMatrix();
 	Matrix GetWorldMatrix();
+	Matrix RotationMatrixAroundX(float angle);
 	Matrix RotationMatrixAroundY(float angle);
 };

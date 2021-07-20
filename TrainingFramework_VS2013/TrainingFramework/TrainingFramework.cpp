@@ -62,37 +62,38 @@ void Update ( ESContext *esContext, float deltaTime )
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 {
-	switch (key)
-	{
-	case 'W':
-	case 'w':
-		SceneManager::GetInstance()->MoveCamera('w');
-		break;
-	case 'S':
-	case 's':
-		SceneManager::GetInstance()->MoveCamera('s');
-		break;
-	case 'A':
-	case 'a':
-		SceneManager::GetInstance()->MoveCamera('a');
-		break;
-	case 'D':
-	case 'd':
-		SceneManager::GetInstance()->MoveCamera('d');
-		break;
-	/*case '\&':
-		Camera::GetInstance()->Move('\&');
-		break;
-	case '\(':
-		Camera::GetInstance()->Move('\(');
-		break;*/
-	case '\%':
-		SceneManager::GetInstance()->MoveCamera('\%');
-		break;
-	case '\'':
-		SceneManager::GetInstance()->MoveCamera('\'');
-		break;
-	}
+	SceneManager::GetInstance()->MoveCamera(key, bIsPressed);
+	//switch (key)
+	//{
+	//case 'W':
+	//case 'w':
+	//	SceneManager::GetInstance()->MoveCamera('w');
+	//	break;
+	//case 'S':
+	//case 's':
+	//	SceneManager::GetInstance()->MoveCamera('s');
+	//	break;
+	//case 'A':
+	//case 'a':
+	//	SceneManager::GetInstance()->MoveCamera('a');
+	//	break;
+	//case 'D':
+	//case 'd':
+	//	SceneManager::GetInstance()->MoveCamera('d');
+	//	break;
+	///*case '\&':
+	//	Camera::GetInstance()->Move('\&');
+	//	break;
+	//case '\(':
+	//	Camera::GetInstance()->Move('\(');
+	//	break;*/
+	//case '\%':
+	//	SceneManager::GetInstance()->MoveCamera('\%');
+	//	break;
+	//case '\'':
+	//	SceneManager::GetInstance()->MoveCamera('\'');
+	//	break;
+	//}
 }
 
 void CleanUp()
