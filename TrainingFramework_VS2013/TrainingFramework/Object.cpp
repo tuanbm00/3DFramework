@@ -71,20 +71,20 @@ void Object::loadCube(char* rightfile, char* leftfile, char* topfile, char* botf
 		0, 1, 2,
 		2, 3, 0,
 
-		4, 5, 6,
-		5, 6, 7,
+		4, 6, 7,
+		7, 5, 4,
 
 		2, 3, 5,
-		3, 5, 7,
+		5, 7, 2,
 
 		0, 1, 4,
-		1, 4, 6,
+		4, 6, 1,
 
 		0, 3, 4,
-		3, 4, 5,
+		4, 5, 3,
 
 		1, 2, 6,
-		2, 3, 7
+		6, 7, 2
 	};
 
 	glGenBuffers(1, &vboId);

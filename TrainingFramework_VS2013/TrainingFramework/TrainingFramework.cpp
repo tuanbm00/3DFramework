@@ -121,6 +121,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	esMainLoop ( &esContext );
 
+	SceneManager::GetInstance()->MemoryClear();
 	//releasing OpenGL resources
 	CleanUp();
 

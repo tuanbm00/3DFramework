@@ -98,6 +98,14 @@ void SceneManager::CleanUP() {
 	Camera::GetInstance()->CleanUp();
 }
 
+void SceneManager::MemoryClear() {
+	delete[] m_listObject;
+	if (s_instance) {
+		delete s_instance;
+		s_instance = NULL;
+	}
+}
+
 void SceneManager::Update(float deltatime) {
 	Camera::GetInstance()->Update(deltatime);
 }

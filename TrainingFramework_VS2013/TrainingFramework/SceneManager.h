@@ -19,5 +19,6 @@ public:
 	void Draw();
 	void CleanUP();
 	void MoveCamera(char key);
+	void MemoryClear();
 	void Update(float deltatime);
 };

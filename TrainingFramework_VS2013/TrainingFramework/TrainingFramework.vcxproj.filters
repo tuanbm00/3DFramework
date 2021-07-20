@@ -121,13 +121,13 @@
     <Image Include="..\Resources\front.tga">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="..\Resources\top.tga">
+      <Filter>Resources</Filter>
+    </Image>
     <Image Include="..\Resources\left.tga">
       <Filter>Resources</Filter>
     </Image>
     <Image Include="..\Resources\right.tga">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\top.tga">
       <Filter>Resources</Filter>
     </Image>
   </ItemGroup>
