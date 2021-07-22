@@ -123,31 +123,17 @@
   <ItemGroup>
     <None Include="..\Resources\Shaders\CubeShaderFS.fs" />
     <None Include="..\Resources\Shaders\CubeShaderVS.vs" />
+    <None Include="..\Resources\Shaders\TerrainShaderFS.fs" />
+    <None Include="..\Resources\Shaders\TerrainShaderVS.vs" />
     <None Include="..\Resources\Shaders\TriangleShaderFS.fs" />
     <None Include="..\Resources\Shaders\TriangleShaderVS.vs" />
     <None Include="..\Readme.doc" />
-    <None Include="..\Resources\Woman1.nfg" />
-    <None Include="..\Resources\Woman2.nfg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">
       <Project>{0d44529e-f7dd-4454-8ead-9afd857f53b4}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Resources\back.tga" />
-    <Image Include="..\Resources\bottom.tga" />
-    <Image Include="..\Resources\front.tga" />
-    <Image Include="..\Resources\left.tga" />
-    <Image Include="..\Resources\right.tga" />
-    <Image Include="..\Resources\top.tga" />
-    <Image Include="..\Resources\Woman1.tga" />
-    <Image Include="..\Resources\Woman2.tga" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\Resources\ResourceManager.txt" />
-    <Text Include="..\Resources\SceneManager.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

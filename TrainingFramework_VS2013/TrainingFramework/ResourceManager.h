@@ -6,6 +6,7 @@ private:
 	char **m_listModelFile;
 	char **m_listTextureFile;
 	char **m_listCubeFile;
+	char **m_listShader;
 public:
 	ResourceManager();
 	~ResourceManager();

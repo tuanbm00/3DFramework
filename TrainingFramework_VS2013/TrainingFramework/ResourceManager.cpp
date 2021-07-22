@@ -31,7 +31,7 @@ void ResourceManager::Init() {
 	Object *listObject = SceneManager::GetInstance()->GetListObject();
 	FILE* file = fopen("..\\Resources\\ResourceManager.txt", "r");
 	char *buff = new char[256];
-	int numOfModels, numOfTextures, numOfCube;
+	int numOfModels, numOfTextures, numOfCube, numOfShader;
 	fscanf(file, "#Models: %d\n", &numOfModels);
 	m_listModelFile = new char*[numOfModels];
 	for (int i = 0; i < numOfModels; i++) {
@@ -44,7 +44,7 @@ void ResourceManager::Init() {
 
 	fscanf(file, "#2D Textures: %d\n", &numOfTextures);
 	m_listTextureFile = new char*[numOfTextures];
-	for (int i = 0; i < numOfModels; i++) {
+	for (int i = 0; i < numOfTextures; i++) {
 		m_listTextureFile[i] = new char[256];
 		int id;
 		fscanf(file, "ID %d\n", &id);
@@ -59,33 +59,67 @@ void ResourceManager::Init() {
 	for (int i = 0; i < 6; i++) {
 		m_listCubeFile[i] = new char[256];
 	}
-	for (int i = 0; i < numOfModels; i++) {
+	for (int i = 0; i < numOfCube; i++) {
 		int id;
 		fscanf(file, "ID %d\n", &id);
 		fscanf(file, "FILE %s , %s , %s , %s , %s , %s\n", m_listCubeFile[0], m_listCubeFile[1], m_listCubeFile[2], m_listCubeFile[3], m_listCubeFile[4], m_listCubeFile[5]);
 		fgets(buff, 255, file);
 		fgets(buff, 255, file);
 	}
+
+	fscanf(file, "\n", buff);
+	fscanf(file, "#Shaders: %d\n", &numOfShader);
+	m_listShader = new char*[numOfShader*2];
+	for (int i = 0; i <numOfShader; i++) {
+		m_listShader[2*i] = new char[256];
+		m_listShader[2*i+1] = new char[256];
+		int id;
+		fscanf(file, "ID %d\n", &id);
+		fscanf(file, "%s\n", m_listShader[2*i]);
+		fscanf(file, "%s\n", m_listShader[2*i+1]);
+		fgets(buff, 255, file);
+		fgets(buff, 255, file);
+	}
 	fclose(file);
 
+	int count = 0;
 	for (int i = 0; i < numOfObject; i++) {
+		int id = listObject[i].m_iObjectID;
+		if (i == numOfObject-1) {
+	//		continue;
+		}
 		if (listObject[i].m_numOfCube == 0) {
-			int id = listObject[i].m_iObjectID;
-			listObject[i].Init(m_listTextureFile[id], m_listModelFile[id]);
+		//	printf("%d\n", listObject[i].m_numOfTexture);
+			char** texture = new char*[listObject[i].m_numOfTexture];
+			
+			for (int j = 0; j < listObject[i].m_numOfTexture; j++) {
+				texture[j] = m_listTextureFile[count];
+				count++;
+			}
+			listObject[i].Init(texture, m_listModelFile[id], m_listShader[2*listObject[i].m_shaderID], m_listShader[2*listObject[i].m_shaderID +1]);
+			
+			for (int j = 0; j < listObject[i].m_numOfTexture; j++) {
+		//		delete texture[j];
+			}
+			delete[] texture;
 		}
 		else {
-			listObject[i].loadCube(m_listCubeFile[0], m_listCubeFile[1], m_listCubeFile[2], m_listCubeFile[3], m_listCubeFile[4], m_listCubeFile[5]);
+			listObject[i].loadCube(m_listModelFile[id], m_listCubeFile[0], m_listCubeFile[1], m_listCubeFile[2], m_listCubeFile[3], m_listCubeFile[4], m_listCubeFile[5]);
 		}
 	}
 	for (int i = 0; i < numOfModels; i++) {
-		delete m_listModelFile[i];
+		delete[] m_listModelFile[i];
 	}
 	for (int i = 0; i < numOfTextures; i++) {
-		delete m_listTextureFile[i];
+		delete[] m_listTextureFile[i];
 	}
 	for (int i = 0; i < 6; i++) {
-		delete m_listCubeFile[i];
+		delete[] m_listCubeFile[i];
 	}
+	for (int i = 0; i < numOfShader*2; i++) {
+		delete[] m_listShader[i];
+	}
+	delete[] m_listShader;
 	delete[] m_listCubeFile;
 	delete[] m_listModelFile;
 	delete[] m_listTextureFile;

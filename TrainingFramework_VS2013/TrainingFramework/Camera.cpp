@@ -186,7 +186,7 @@ Matrix Camera::RotationMatrixAroundY(float angle) {
 	zaxis = (m_position - m_target).Normalize();
 	xaxis = (m_up.Cross(zaxis)).Normalize();
 	yaxis = (zaxis.Cross(xaxis)).Normalize();
-	Vector4 localY = Vector4(yaxis, 0);
+	Vector4 localY = Vector4(0, 1, 0, 0);
 	localY = localY * GetViewMatrix();
 	Matrix rotationAxis;
 	return rotationAxis.SetRotationAngleAxis(angle, localY.x, localY.y, localY.z);

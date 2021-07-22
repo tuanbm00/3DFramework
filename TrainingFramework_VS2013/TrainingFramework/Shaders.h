@@ -13,6 +13,9 @@ public:
 	GLint cubeAttribute;
 	GLint uniformLocation;
 	GLint mvpUniform;
+	GLint rUniform;
+	GLint gUniform;
+	GLint bUniform;
 	int Init(char * fileVertexShader, char * fileFragmentShader);
 	~Shaders();
 };

@@ -45,13 +45,23 @@ void SceneManager::Init() {
 	fscanf(file, "\n", buff);
 	fscanf(file, "#Objects: %d\n", &m_numOfObject);
 	m_listObject = new Object[m_numOfObject];
+	shader = new char*[m_numOfObject];
 	for (int i = 0; i < m_numOfObject; i++) {
-		int idObject, numOfCube;
+		int idObject, numOfCube, numOfTextures, shaderID;
 		fscanf(file, "ID %d\n", &idObject);
 		m_listObject[i].SetID(idObject);
+		fscanf(file, "MODEL %d\n", &idObject);
+		fscanf(file, "TEXTURES %d\n", &numOfTextures);
+		m_listObject[i].SetnumOfTexture(numOfTextures);
+		for (int j = 0; j < numOfTextures; j++) {
+			fscanf(file, "TEXTURE %d\n", &idObject);
+		}
 
 		fscanf(file, "CUBETEXTURES %d\n", &numOfCube);
 		m_listObject[i].SetnumOfCube(numOfCube);
+
+		fscanf(file, "SHADER %d\n", &shaderID);
+		m_listObject[i].SetnumOfShader(shaderID);
 
 		fscanf(file, "POSITION %f %f %f\n", &x, &y, &z);
 		m_listObject[i].SetPosition(x, y, z);
@@ -100,6 +110,12 @@ void SceneManager::CleanUP() {
 
 void SceneManager::MemoryClear() {
 	delete[] m_listObject;
+//	for (int i = 0; i < m_numOfObject; i++) {
+//		delete[] shader[i];
+//	}
+
+//	delete[] shader;
+	
 	if (s_instance) {
 		delete s_instance;
 		s_instance = NULL;

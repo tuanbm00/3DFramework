@@ -1,16 +1,36 @@
-#Models: 2
+#Models: 4
 ID 0
 FILE ..\\Resources\\Woman1.nfg
 ID 1
 FILE ..\\Resources\\Woman2.nfg
+ID 2
+FILE ..\\Resources\\cube.nfg
+ID 3
+FILE ..\\Resources\\Terrain.nfg
 
-#2D Textures: 2
+#2D Textures: 6
 ID 0
 FILE ..\\Resources\\Woman1.tga
 WRAP REPEAT
 FILTER LINEAR LINEAR
 ID 1
 FILE ..\\Resources\\Woman2.tga
+WRAP REPEAT
+FILTER LINEAR_LINEAR LINEAR
+ID 2
+FILE ..\\Resources\\Terrain_blendmap_1.tga
+WRAP REPEAT
+FILTER LINEAR_LINEAR LINEAR
+ID 3
+FILE ..\\Resources\\Dirt.tga
+WRAP REPEAT
+FILTER LINEAR_LINEAR LINEAR
+ID 4
+FILE ..\\Resources\\Grass.tga
+WRAP REPEAT
+FILTER LINEAR_LINEAR LINEAR
+ID 5
+FILE ..\\Resources\\Rock.tga
 WRAP REPEAT
 FILTER LINEAR_LINEAR LINEAR
 
@@ -20,14 +40,19 @@ FILE ..\\Resources\\right.tga , ..\\Resources\\left.tga , ..\\Resources\\top.tga
 WRAP CLAMP
 FILTER LINEAR LINEAR
 
-#Shaders: 2
+#Shaders: 3
 ID 0
 ../Resources/Shaders/TriangleShaderVS.vs
 ../Resources/Shaders/TriangleShaderFS.fs
 STATES 1
 GL_DEPTH_TEST 1
-ID 2
+ID 1
 ../Resources/Shaders/CubeShaderVS.vs 
 ../Resources/Shaders/CubeShaderFS.fs
+STATES 1
+GL_DEPTH_TEST 1
+ID 2
+../Resources/Shaders/TerrainShaderVS.vs 
+../Resources/Shaders/TerrainShaderFS.fs
 STATES 1
 GL_DEPTH_TEST 1

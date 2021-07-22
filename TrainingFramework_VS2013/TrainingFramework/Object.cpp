@@ -18,6 +18,19 @@ void Object::SetnumOfCube(int numOfCube) {
 	m_numOfCube = numOfCube;
 }
 
+void Object::SetnumOfShader(int shaderID) {
+	m_shaderID = shaderID;
+}
+
+void Object::SetnumOfTexture(int numOfTexture) {
+	if (numOfTexture == 0) {
+		numOfTexture = 1;
+	}
+	m_numOfTexture = numOfTexture;
+	textureID = new GLuint[numOfTexture];
+	m_texture = new Texture[numOfTexture];
+}
+
 void Object::SetPosition(float x, float y, float z) {
 	m_position = Vector3(x, y, z);
 }
@@ -30,8 +43,7 @@ void Object::SetRotation(float x, float y, float z) {
 	m_rotation = Vector3(x, y, z);
 }
 
-void Object::Init(char* fileTexture, char* fileModel) {
-	m_numOfCube = 0;
+void Object::Init(char** fileTexture, char* fileModel, char* fileVS, char* fileFS) {
 	m_model.Init(fileModel);
 	glGenBuffers(1, &vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
@@ -43,65 +55,68 @@ void Object::Init(char* fileTexture, char* fileModel) {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_model.numOfIndices * sizeof(int), m_model.indices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
-	m_texture.Init(fileTexture);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glGenTextures(m_numOfTexture, textureID);
+	for (int i = 0; i < m_numOfTexture; i++) {
+		glBindTexture(GL_TEXTURE_2D, textureID[i]);
+		m_texture[i].Init(fileTexture[i]);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 	delete[] m_model.indices;
 	delete[] m_model.vertices;
-
-	m_shaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+	m_shaders.Init(fileVS, fileFS);
 }
 
-void Object::loadCube(char* rightfile, char* leftfile, char* topfile, char* botfile, char* frontfile, char* backfile) {
-	m_numOfCube = 6;
-	float skyboxVertices[] = {
-		// positions          
-		-1.0f,  1.0f, -1.0f,
-		 1.0f,  1.0f, -1.0f,
-		 1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f,  1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f,  1.0f,
-	};
+void Object::loadCube(char* fileModel, char* rightfile, char* leftfile, char* topfile, char* botfile, char* frontfile, char* backfile) {
+	//float skyboxVertices[] = {
+	//	// positions          
+	//	-1.0f,  1.0f, -1.0f,
+	//	 1.0f,  1.0f, -1.0f,
+	//	 1.0f,  1.0f,  1.0f,
+	//	-1.0f,  1.0f,  1.0f,
+	//	-1.0f, -1.0f, -1.0f,
+	//	-1.0f, -1.0f,  1.0f,
+	//	 1.0f, -1.0f, -1.0f,
+	//	 1.0f, -1.0f,  1.0f,
+	//};
 
-	int indices[] = {
-		0, 1, 2,
-		2, 3, 0,
+	//int indices[] = {
+	//	0, 1, 2,
+	//	2, 3, 0,
 
-		4, 6, 7,
-		7, 5, 4,
+	//	4, 6, 7,
+	//	7, 5, 4,
 
-		2, 3, 5,
-		5, 7, 2,
+	//	2, 3, 5,
+	//	5, 7, 2,
 
-		0, 1, 4,
-		4, 6, 1,
+	//	0, 1, 4,
+	//	4, 6, 1,
 
-		0, 3, 4,
-		4, 5, 3,
+	//	0, 3, 4,
+	//	4, 5, 3,
 
-		1, 2, 6,
-		6, 7, 2
-	};
+	//	1, 2, 6,
+	//	6, 7, 2
+	//};
+	m_model.Init(fileModel);
 
 	glGenBuffers(1, &vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), skyboxVertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, m_model.numOfVertices * sizeof(Vertex), m_model.vertices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glGenBuffers(1, &iboId);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_model.numOfIndices * sizeof(int), m_model.indices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
-	m_texture.loadCube(rightfile, leftfile, topfile, botfile, frontfile, backfile);
+	glGenTextures(1, textureID);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID[0]);
+	m_texture[0].loadCube(rightfile, leftfile, topfile, botfile, frontfile, backfile);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-
+	
+	delete[] m_model.indices;
+	delete[] m_model.vertices;
 	m_shaders.Init("../Resources/Shaders/CubeShaderVS.vs", "../Resources/Shaders/CubeShaderFS.fs");
 }
 
@@ -125,7 +140,7 @@ void Object::Draw() {
 	if (m_numOfCube) {
 		glUseProgram(m_shaders.program);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID[0]);
 //		glUniform1i(m_shaders.uniformLocation, 0);
 
 //		glUniform1i(m_shaders.cubeAttribute, 0);
@@ -133,7 +148,7 @@ void Object::Draw() {
 
 		glBindBuffer(GL_ARRAY_BUFFER, vboId);
 		glEnableVertexAttribArray(m_shaders.positionAttribute);
-		glVertexAttribPointer(m_shaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), 0);
+		glVertexAttribPointer(m_shaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 //		glEnableVertexAttribArray(m_shaders.cubeAttribute);
 //		glVertexAttribPointer(m_shaders.cubeAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(float), 0);
 
@@ -150,9 +165,20 @@ void Object::Draw() {
 	else {
 		glUseProgram(m_shaders.program);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureID);
+		glBindTexture(GL_TEXTURE_2D, textureID[0]);
 		glUniform1i(m_shaders.uniformLocation, 0);
+		if (m_numOfTexture > 1) {
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, textureID[1]);
+			glUniform1i(m_shaders.rUniform, 1);
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, textureID[2]);
+			glUniform1i(m_shaders.gUniform, 2);
+			glActiveTexture(GL_TEXTURE3);
+			glBindTexture(GL_TEXTURE_2D, textureID[3]);			
+			glUniform1i(m_shaders.bUniform, 3);
 
+		}
 		glBindBuffer(GL_ARRAY_BUFFER, vboId);
 		glEnableVertexAttribArray(m_shaders.positionAttribute);
 		glVertexAttribPointer(m_shaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
@@ -179,5 +205,5 @@ void Object::Update(float deltatime) {
 void Object::CleanUp() {
 	glDeleteBuffers(1, &vboId);
 	glDeleteBuffers(1, &iboId);
-	glDeleteBuffers(1, &textureID);
+	glDeleteBuffers(1, textureID);
 }

@@ -8,6 +8,7 @@ class SceneManager {
 private:
 	static SceneManager* s_instance;
 	Object *m_listObject;
+	char** shader;
 	int m_numOfObject;
 public:
 	SceneManager();
