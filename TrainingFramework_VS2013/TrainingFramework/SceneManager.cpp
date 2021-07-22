@@ -45,7 +45,6 @@ void SceneManager::Init() {
 	fscanf(file, "\n", buff);
 	fscanf(file, "#Objects: %d\n", &m_numOfObject);
 	m_listObject = new Object[m_numOfObject];
-	shader = new char*[m_numOfObject];
 	for (int i = 0; i < m_numOfObject; i++) {
 		int idObject, numOfCube, numOfTextures, shaderID;
 		fscanf(file, "ID %d\n", &idObject);
@@ -109,13 +108,12 @@ void SceneManager::CleanUP() {
 }
 
 void SceneManager::MemoryClear() {
+	for (int i = 0; i < m_numOfObject; i++) {
+		delete[] m_listObject[i].m_texture;
+		delete[] m_listObject[i].textureID;
+	}
 	delete[] m_listObject;
-//	for (int i = 0; i < m_numOfObject; i++) {
-//		delete[] shader[i];
-//	}
 
-//	delete[] shader;
-	
 	if (s_instance) {
 		delete s_instance;
 		s_instance = NULL;

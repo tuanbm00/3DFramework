@@ -21,6 +21,7 @@ int Shaders::Init(char * fileVertexShader, char * fileFragmentShader)
 	//finding location of uniforms / attributes
 	positionAttribute = glGetAttribLocation(program, "a_posL");
 	uvAttribute = glGetAttribLocation(program, "a_uv");
+	normalAttribute = glGetAttribLocation(program, "a_normal");
 	colorAttribute = glGetAttribLocation(program, "a_color");
 	cubeAttribute = glGetUniformLocation(program, "u_samplerCubeMap");
 	uniformLocation = glGetUniformLocation(program, "u_texture");
@@ -28,6 +29,7 @@ int Shaders::Init(char * fileVertexShader, char * fileFragmentShader)
 	rUniform = glGetUniformLocation(program, "r_texture");
 	gUniform = glGetUniformLocation(program, "g_texture");
 	bUniform = glGetUniformLocation(program, "b_texture");
+	heightMapUniform = glGetUniformLocation(program, "heightMap");
 	return 0;
 }
 

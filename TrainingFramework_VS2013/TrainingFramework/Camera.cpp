@@ -269,10 +269,10 @@ void Camera::Move(char key, bool bIsPress) {
 
 void Camera::CheckMove() {
 	if (keyPressed & MOVE_FRONT) {
-		m_moveVertical = 1.0f;
+		m_moveVertical = -1.0f;
 	}
 	if (keyPressed & MOVE_BACK) {
-		m_moveVertical = -1.0f;
+		m_moveVertical = 1.0f;
 	}
 	if (keyPressed & MOVE_LEFT) {
 		m_moveHorizontal = -1.0f;

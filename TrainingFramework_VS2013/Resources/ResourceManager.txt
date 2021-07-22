@@ -8,7 +8,7 @@ FILE ..\\Resources\\cube.nfg
 ID 3
 FILE ..\\Resources\\Terrain.nfg
 
-#2D Textures: 6
+#2D Textures: 7
 ID 0
 FILE ..\\Resources\\Woman1.tga
 WRAP REPEAT
@@ -31,6 +31,10 @@ WRAP REPEAT
 FILTER LINEAR_LINEAR LINEAR
 ID 5
 FILE ..\\Resources\\Rock.tga
+WRAP REPEAT
+FILTER LINEAR_LINEAR LINEAR
+ID 6
+FILE ..\\Resources\\heightmap.tga
 WRAP REPEAT
 FILTER LINEAR_LINEAR LINEAR
 

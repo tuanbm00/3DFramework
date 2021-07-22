@@ -177,11 +177,17 @@ void Object::Draw() {
 			glActiveTexture(GL_TEXTURE3);
 			glBindTexture(GL_TEXTURE_2D, textureID[3]);			
 			glUniform1i(m_shaders.bUniform, 3);
-
+			glActiveTexture(GL_TEXTURE4);
+			glBindTexture(GL_TEXTURE_2D, textureID[4]);
+			glUniform1i(m_shaders.heightMapUniform, 4);
 		}
 		glBindBuffer(GL_ARRAY_BUFFER, vboId);
 		glEnableVertexAttribArray(m_shaders.positionAttribute);
 		glVertexAttribPointer(m_shaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+
+		glEnableVertexAttribArray(m_shaders.normalAttribute);
+		glVertexAttribPointer(m_shaders.uvAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*)(0 + sizeof(Vector3)));
+
 		glEnableVertexAttribArray(m_shaders.uvAttribute);
 		glVertexAttribPointer(m_shaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*)(0 + sizeof(Vector3)*4));
 	
