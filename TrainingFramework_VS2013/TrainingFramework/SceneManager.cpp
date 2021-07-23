@@ -121,6 +121,9 @@ void SceneManager::MemoryClear() {
 }
 
 void SceneManager::Update(float deltatime) {
+	for (int i = 0; i < m_numOfObject; i++) {
+		m_listObject[i].m_deltatime = deltatime;
+	}
 	Camera::GetInstance()->Update(deltatime);
 }
 

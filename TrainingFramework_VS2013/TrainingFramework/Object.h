@@ -17,6 +17,7 @@ public:
 	Matrix m_worldMatrix;
 	Matrix m_WVP;
 
+	float m_deltatime;
 	int m_iObjectID;
 	int m_numOfTexture;
 	int m_numOfCube;

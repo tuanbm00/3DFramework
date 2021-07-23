@@ -128,6 +128,8 @@
     <None Include="..\Resources\Shaders\TriangleShaderFS.fs" />
     <None Include="..\Resources\Shaders\TriangleShaderVS.vs" />
     <None Include="..\Readme.doc" />
+    <None Include="..\Resources\Shaders\UVDisplacementShaderFS.fs" />
+    <None Include="..\Resources\Shaders\UVDisplacementShaderVS.vs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">

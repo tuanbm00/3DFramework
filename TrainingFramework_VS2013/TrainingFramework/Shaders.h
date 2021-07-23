@@ -18,6 +18,7 @@ public:
 	GLint gUniform;
 	GLint bUniform;
 	GLint heightMapUniform;
+	GLint timeUniform;
 	int Init(char * fileVertexShader, char * fileFragmentShader);
 	~Shaders();
 };

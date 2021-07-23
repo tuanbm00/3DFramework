@@ -30,6 +30,7 @@ int Shaders::Init(char * fileVertexShader, char * fileFragmentShader)
 	gUniform = glGetUniformLocation(program, "g_texture");
 	bUniform = glGetUniformLocation(program, "b_texture");
 	heightMapUniform = glGetUniformLocation(program, "heightMap");
+	timeUniform = glGetUniformLocation(program, "u_time");
 	return 0;
 }
 

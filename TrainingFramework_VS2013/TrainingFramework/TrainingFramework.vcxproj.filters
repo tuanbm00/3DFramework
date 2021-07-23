@@ -104,5 +104,11 @@
     <None Include="..\Resources\Shaders\TerrainShaderVS.vs">
       <Filter>Resources\Shaders</Filter>
     </None>
+    <None Include="..\Resources\Shaders\UVDisplacementShaderFS.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\UVDisplacementShaderVS.vs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

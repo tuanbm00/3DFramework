@@ -2,7 +2,7 @@
 #include "Object.h"
 
 Object::Object() {
-
+	m_deltatime = 0;
 }
 
 Object::~Object() {
@@ -167,24 +167,24 @@ void Object::Draw() {
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureID[0]);
 		glUniform1i(m_shaders.uniformLocation, 0);
-		if (m_numOfTexture > 1) {
-			glActiveTexture(GL_TEXTURE1);
-			glBindTexture(GL_TEXTURE_2D, textureID[1]);
-			glUniform1i(m_shaders.rUniform, 1);
-			glActiveTexture(GL_TEXTURE2);
-			glBindTexture(GL_TEXTURE_2D, textureID[2]);
-			glUniform1i(m_shaders.gUniform, 2);
-			glActiveTexture(GL_TEXTURE3);
-			glBindTexture(GL_TEXTURE_2D, textureID[3]);			
-			glUniform1i(m_shaders.bUniform, 3);
-			glActiveTexture(GL_TEXTURE4);
-			glBindTexture(GL_TEXTURE_2D, textureID[4]);
-			glUniform1i(m_shaders.heightMapUniform, 4);
-		}
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, textureID[1]);
+		glUniform1i(m_shaders.rUniform, 1);
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, textureID[2]);
+		glUniform1i(m_shaders.gUniform, 2);
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, textureID[3]);			
+		glUniform1i(m_shaders.bUniform, 3);
+		glActiveTexture(GL_TEXTURE4);
+		glBindTexture(GL_TEXTURE_2D, textureID[4]);
+		glUniform1i(m_shaders.heightMapUniform, 4);
+
 		glBindBuffer(GL_ARRAY_BUFFER, vboId);
+
 		glEnableVertexAttribArray(m_shaders.positionAttribute);
 		glVertexAttribPointer(m_shaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-
+		
 		glEnableVertexAttribArray(m_shaders.normalAttribute);
 		glVertexAttribPointer(m_shaders.uvAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*)(0 + sizeof(Vector3)));
 
@@ -193,6 +193,9 @@ void Object::Draw() {
 	
 		glEnableVertexAttribArray(m_shaders.mvpUniform);
 		glUniformMatrix4fv(m_shaders.mvpUniform, 1, GL_FALSE, (GLfloat*) m_WVP.m);
+
+		glEnableVertexAttribArray(m_shaders.timeUniform);
+		glUniform1fv(m_shaders.timeUniform, 1, (GLfloat*) &m_deltatime);
 	
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
 		glDrawElements(GL_TRIANGLES, m_model.numOfIndices, GL_UNSIGNED_INT, 0);
