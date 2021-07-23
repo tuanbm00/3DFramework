@@ -53,8 +53,8 @@ WRAP REPEAT
 FILTER LINEAR_LINEAR LINEAR
 
 #Cube Textures: 1
-ID 2
-FILE ..\\Resources\\right.tga , ..\\Resources\\left.tga , ..\\Resources\\top.tga , ..\\Resources\\bottom.tga , ..\\Resources\\front.tga , ..\\Resources\\back.tga
+ID 0
+FILE ..\\Resources\\envMap.tga
 WRAP CLAMP
 FILTER LINEAR LINEAR
 

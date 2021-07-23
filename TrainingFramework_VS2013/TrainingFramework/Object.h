@@ -39,7 +39,7 @@ public:
 	void SetScale(float x, float y, float z);
 	void SetRotation(float x, float y, float z);
 	void Init(char** fileTexture, char* fileModel, char* fileVS, char* fileFS);
-	void loadCube(char* fileModel, char* leftfile, char* rightfile, char* topfile, char* botfile, char* frontfile, char* backfile);
+	void loadCube(char* fileModel, char* filename);
 	void Draw();
 	void IntMVP();
 	void CleanUp();

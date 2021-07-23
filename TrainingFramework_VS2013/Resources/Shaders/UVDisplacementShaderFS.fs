@@ -12,7 +12,7 @@ varying float dis;
 void main()
 {
 //	gl_FragColor = vec4(v_color);
-	float fogValue = clamp((dis - 1.0) / 50.0, 0.0, 1.0);
+	float fogValue = clamp((dis - 10.0) / 50.0, 0.0, 1.0);
 	vec2 disp = texture2D(r_texture, vec2(v_uv.x, v_uv.y + u_time)).rg;
 	vec2 offset = (2.0 * disp - 1.0) * 0.1;
 	vec2 displaced = v_uv + offset;

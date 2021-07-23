@@ -66,38 +66,7 @@ void Object::Init(char** fileTexture, char* fileModel, char* fileVS, char* fileF
 	m_shaders.Init(fileVS, fileFS);
 }
 
-void Object::loadCube(char* fileModel, char* rightfile, char* leftfile, char* topfile, char* botfile, char* frontfile, char* backfile) {
-	//float skyboxVertices[] = {
-	//	// positions          
-	//	-1.0f,  1.0f, -1.0f,
-	//	 1.0f,  1.0f, -1.0f,
-	//	 1.0f,  1.0f,  1.0f,
-	//	-1.0f,  1.0f,  1.0f,
-	//	-1.0f, -1.0f, -1.0f,
-	//	-1.0f, -1.0f,  1.0f,
-	//	 1.0f, -1.0f, -1.0f,
-	//	 1.0f, -1.0f,  1.0f,
-	//};
-
-	//int indices[] = {
-	//	0, 1, 2,
-	//	2, 3, 0,
-
-	//	4, 6, 7,
-	//	7, 5, 4,
-
-	//	2, 3, 5,
-	//	5, 7, 2,
-
-	//	0, 1, 4,
-	//	4, 6, 1,
-
-	//	0, 3, 4,
-	//	4, 5, 3,
-
-	//	1, 2, 6,
-	//	6, 7, 2
-	//};
+void Object::loadCube(char* fileModel, char* filename) {
 	m_model.Init(fileModel);
 
 	glGenBuffers(1, &vboId);
@@ -112,7 +81,8 @@ void Object::loadCube(char* fileModel, char* rightfile, char* leftfile, char* to
 
 	glGenTextures(1, textureID);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID[0]);
-	m_texture[0].loadCube(rightfile, leftfile, topfile, botfile, frontfile, backfile);
+//	m_texture[0].loadCube(rightfile, leftfile, topfile, botfile, frontfile, backfile);
+	m_texture[0].loadCube(filename);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	
 	delete[] m_model.indices;
@@ -141,18 +111,11 @@ void Object::Draw() {
 		glUseProgram(m_shaders.program);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID[0]);
-//		glUniform1i(m_shaders.uniformLocation, 0);
-
-//		glUniform1i(m_shaders.cubeAttribute, 0);
-
 
 		glBindBuffer(GL_ARRAY_BUFFER, vboId);
 		glEnableVertexAttribArray(m_shaders.positionAttribute);
 		glVertexAttribPointer(m_shaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-//		glEnableVertexAttribArray(m_shaders.cubeAttribute);
-//		glVertexAttribPointer(m_shaders.cubeAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(float), 0);
 
-//		glEnableVertexAttribArray(m_shaders.mvpUniform);
 		glUniformMatrix4fv(m_shaders.mvpUniform, 1, GL_FALSE, (GLfloat*)m_WVP.m);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
@@ -194,9 +157,8 @@ void Object::Draw() {
 		glEnableVertexAttribArray(m_shaders.mvpUniform);
 		glUniformMatrix4fv(m_shaders.mvpUniform, 1, GL_FALSE, (GLfloat*) m_WVP.m);
 
-		glEnableVertexAttribArray(m_shaders.timeUniform);
-		glUniform1fv(m_shaders.timeUniform, 1, (GLfloat*) &m_deltatime);
-	
+		glUniform1f(m_shaders.timeUniform, m_deltatime);
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
 		glDrawElements(GL_TRIANGLES, m_model.numOfIndices, GL_UNSIGNED_INT, 0);
 
@@ -204,11 +166,10 @@ void Object::Draw() {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-
 }
 
 void Object::Update(float deltatime) {
-
+	m_deltatime = deltatime;
 }
 
 void Object::CleanUp() {
