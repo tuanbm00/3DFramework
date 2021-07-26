@@ -40,6 +40,15 @@ void SceneManager::Init() {
 		fscanf(file, "MOVE_SPEED %f\n", &x);
 		fscanf(file, "ROTATE_SPEED %f\n", &y);
 		Camera::GetInstance()->SetSpeed(x, y);
+
+		fscanf(file, "FOG_START %f\n", &x);
+		Camera::GetInstance()->SetFogStart(x);
+
+		fscanf(file, "FOG_LENGTH %f\n", &x);
+		Camera::GetInstance()->SetFogLength(x);
+		
+		fscanf(file, "FOG_COLOR %f %f %f\n", &x, &y, &z);
+		Camera::GetInstance()->SetFogColor(x, y, z);
 	}
 
 	fscanf(file, "\n", buff);

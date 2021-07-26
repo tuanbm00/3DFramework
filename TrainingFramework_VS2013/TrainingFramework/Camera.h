@@ -18,6 +18,8 @@ private:
 	float m_FOV;
 	float m_Near;
 	float m_Far;
+	float m_fog_start;
+	float m_fog_length;
 	float m_move_speed;
 	float m_rot_speed;
 	float m_rotVertical;
@@ -29,6 +31,7 @@ private:
 	Vector3 m_position;
 	Vector3 m_target;
 	Vector3 m_up;
+	Vector3 m_fog_color;
 	Matrix m_viewMatrix;
 	Matrix m_worldMatrix;
 public:
@@ -38,6 +41,12 @@ public:
 	void SetPosition(float x, float y, float z);
 	void SetTarget(float x, float y, float z);
 	void SetUp(float x, float y, float z);
+	void SetFogStart(float x);
+	void SetFogLength(float x);
+	void SetFogColor(float x, float y, float z);
+	float GetFogStart();
+	float GetFogLength();
+	Vector3 GetFogColor();
 	void SetSpeed(float m_move_speed, float m_rot_speed);
 	void Update(float deltatime);
 	void Move(char key, bool bIsPressed);

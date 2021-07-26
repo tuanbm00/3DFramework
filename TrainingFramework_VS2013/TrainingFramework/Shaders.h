@@ -19,6 +19,9 @@ public:
 	GLint bUniform;
 	GLint heightMapUniform;
 	GLint timeUniform;
+	GLint fogStartUniform;
+	GLint fogLengthUniform;
+	GLint fogColorUniform;
 	int Init(char * fileVertexShader, char * fileFragmentShader);
 	~Shaders();
 };

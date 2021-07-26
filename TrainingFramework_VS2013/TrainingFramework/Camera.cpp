@@ -36,6 +36,30 @@ void Camera::SetUp(float x, float y, float z) {
 	m_up = Vector3(x, y, z);
 }
 
+void Camera::SetFogStart(float x) {
+	m_fog_start = x;
+}
+
+void Camera::SetFogLength(float x) {
+	m_fog_length = x;
+}
+
+void Camera::SetFogColor(float x, float y, float z) {
+	m_fog_color = Vector3(x, y, z);
+}
+
+float Camera::GetFogStart() {
+	return m_fog_start;
+}
+
+float Camera::GetFogLength() {
+	return m_fog_length;
+}
+
+Vector3 Camera::GetFogColor() {
+	return m_fog_color;
+}
+
 void Camera::SetSpeed(float move_speed, float rot_speed) {
 	m_move_speed = move_speed;
 	m_rot_speed = rot_speed;

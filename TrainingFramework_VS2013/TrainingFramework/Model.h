@@ -11,5 +11,6 @@ public:
 	int numOfIndices;
 	Model();
 	~Model();
-	bool Init(char *filename);
+	void Init(char *filename);
+	void loadHeight(char *filename);
 };

@@ -91,9 +91,6 @@ void ResourceManager::Init() {
 				count++;
 			}
 			listObject[i].Init(texture, m_listModelFile[id], m_listShader[2*listObject[i].m_shaderID], m_listShader[2*listObject[i].m_shaderID +1]);
-			
-			for (int j = 0; j < listObject[i].m_numOfTexture; j++) {
-			}
 			delete[] texture;
 		}
 		else {

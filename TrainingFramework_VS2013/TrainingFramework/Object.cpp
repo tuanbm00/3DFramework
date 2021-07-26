@@ -44,7 +44,17 @@ void Object::SetRotation(float x, float y, float z) {
 }
 
 void Object::Init(char** fileTexture, char* fileModel, char* fileVS, char* fileFS) {
+	glGenTextures(m_numOfTexture, textureID);
+	for (int i = 0; i < m_numOfTexture; i++) {
+		glBindTexture(GL_TEXTURE_2D, textureID[i]);
+		m_texture[i].Init(fileTexture[i]);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
 	m_model.Init(fileModel);
+	if (m_numOfTexture == 5) {
+		m_model.loadHeight(fileTexture[4]);
+	}
 	glGenBuffers(1, &vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
 	glBufferData(GL_ARRAY_BUFFER, m_model.numOfVertices * sizeof(Vertex), m_model.vertices, GL_STATIC_DRAW);
@@ -55,12 +65,6 @@ void Object::Init(char** fileTexture, char* fileModel, char* fileVS, char* fileF
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_model.numOfIndices * sizeof(int), m_model.indices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	glGenTextures(m_numOfTexture, textureID);
-	for (int i = 0; i < m_numOfTexture; i++) {
-		glBindTexture(GL_TEXTURE_2D, textureID[i]);
-		m_texture[i].Init(fileTexture[i]);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
 	delete[] m_model.indices;
 	delete[] m_model.vertices;
 	m_shaders.Init(fileVS, fileFS);
@@ -81,7 +85,6 @@ void Object::loadCube(char* fileModel, char* filename) {
 
 	glGenTextures(1, textureID);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID[0]);
-//	m_texture[0].loadCube(rightfile, leftfile, topfile, botfile, frontfile, backfile);
 	m_texture[0].loadCube(filename);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	
@@ -140,16 +143,11 @@ void Object::Draw() {
 		glBindTexture(GL_TEXTURE_2D, textureID[3]);			
 		glUniform1i(m_shaders.bUniform, 3);
 		glActiveTexture(GL_TEXTURE4);
-		glBindTexture(GL_TEXTURE_2D, textureID[4]);
-		glUniform1i(m_shaders.heightMapUniform, 4);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vboId);
 
 		glEnableVertexAttribArray(m_shaders.positionAttribute);
 		glVertexAttribPointer(m_shaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-		
-		glEnableVertexAttribArray(m_shaders.normalAttribute);
-		glVertexAttribPointer(m_shaders.uvAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*)(0 + sizeof(Vector3)));
 
 		glEnableVertexAttribArray(m_shaders.uvAttribute);
 		glVertexAttribPointer(m_shaders.uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*)(0 + sizeof(Vector3)*4));
@@ -158,6 +156,14 @@ void Object::Draw() {
 		glUniformMatrix4fv(m_shaders.mvpUniform, 1, GL_FALSE, (GLfloat*) m_WVP.m);
 
 		glUniform1f(m_shaders.timeUniform, m_deltatime);
+		glUniform1f(m_shaders.fogStartUniform, Camera::GetInstance()->GetFogStart());
+		glUniform1f(m_shaders.fogLengthUniform, Camera::GetInstance()->GetFogLength());
+		float v[3];
+		v[0] = Camera::GetInstance()->GetFogColor().x;
+		v[1] = Camera::GetInstance()->GetFogColor().y;
+		v[2] = Camera::GetInstance()->GetFogColor().z;
+
+		glUniform3fv(m_shaders.fogColorUniform, 1, v);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
 		glDrawElements(GL_TRIANGLES, m_model.numOfIndices, GL_UNSIGNED_INT, 0);

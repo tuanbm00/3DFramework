@@ -23,6 +23,7 @@ int Shaders::Init(char * fileVertexShader, char * fileFragmentShader)
 	uvAttribute = glGetAttribLocation(program, "a_uv");
 	normalAttribute = glGetAttribLocation(program, "a_normal");
 	colorAttribute = glGetAttribLocation(program, "a_color");
+
 	cubeAttribute = glGetUniformLocation(program, "u_samplerCubeMap");
 	uniformLocation = glGetUniformLocation(program, "u_texture");
 	mvpUniform = glGetUniformLocation(program, "u_mvpMatrix");
@@ -31,6 +32,9 @@ int Shaders::Init(char * fileVertexShader, char * fileFragmentShader)
 	bUniform = glGetUniformLocation(program, "b_texture");
 	heightMapUniform = glGetUniformLocation(program, "heightMap");
 	timeUniform = glGetUniformLocation(program, "u_time");
+	fogStartUniform = glGetUniformLocation(program, "fog_start");
+	fogLengthUniform = glGetUniformLocation(program, "fog_length");
+	fogColorUniform = glGetUniformLocation(program, "fog_color");
 	return 0;
 }
 
