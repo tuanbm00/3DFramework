@@ -11,8 +11,8 @@ varying float dis;
 void main()
 {
 //	gl_FragColor = vec4(v_color);
-	float fogValue = clamp((dis - fog_start) / fog_length, 0.0, 1.0);
+	float fogValue = clamp((dis - fog_start) / (fog_length * 20.0), 0.0, 1.0);
 	vec4 textColor = textureCube(u_samplerCubeMap, v_pos);
-	gl_FragColor = fogValue*vec4(0.8, 0.8, 0.8, 1.0) + (1.0-fogValue)*textColor;
+	gl_FragColor = fogValue*vec4(fog_color, 1.0) + (1.0-fogValue)*textColor;
 
 }

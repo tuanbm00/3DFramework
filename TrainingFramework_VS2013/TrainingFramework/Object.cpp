@@ -110,8 +110,18 @@ void Object::IntMVP() {
 
 void Object::Draw() {
 	IntMVP();
+	glUseProgram(m_shaders.program);
+
+	glUniform1f(m_shaders.fogStartUniform, Camera::GetInstance()->GetFogStart());
+	glUniform1f(m_shaders.fogLengthUniform, Camera::GetInstance()->GetFogLength());
+	float v[3];
+	v[0] = Camera::GetInstance()->GetFogColor().x;
+	v[1] = Camera::GetInstance()->GetFogColor().y;
+	v[2] = Camera::GetInstance()->GetFogColor().z;
+
+	glUniform3fv(m_shaders.fogColorUniform, 1, v);
+
 	if (m_numOfCube) {
-		glUseProgram(m_shaders.program);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID[0]);
 
@@ -129,7 +139,6 @@ void Object::Draw() {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 	else {
-		glUseProgram(m_shaders.program);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureID[0]);
 		glUniform1i(m_shaders.uniformLocation, 0);
@@ -156,14 +165,6 @@ void Object::Draw() {
 		glUniformMatrix4fv(m_shaders.mvpUniform, 1, GL_FALSE, (GLfloat*) m_WVP.m);
 
 		glUniform1f(m_shaders.timeUniform, m_deltatime);
-		glUniform1f(m_shaders.fogStartUniform, Camera::GetInstance()->GetFogStart());
-		glUniform1f(m_shaders.fogLengthUniform, Camera::GetInstance()->GetFogLength());
-		float v[3];
-		v[0] = Camera::GetInstance()->GetFogColor().x;
-		v[1] = Camera::GetInstance()->GetFogColor().y;
-		v[2] = Camera::GetInstance()->GetFogColor().z;
-
-		glUniform3fv(m_shaders.fogColorUniform, 1, v);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
 		glDrawElements(GL_TRIANGLES, m_model.numOfIndices, GL_UNSIGNED_INT, 0);
