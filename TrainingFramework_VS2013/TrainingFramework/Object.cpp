@@ -151,7 +151,6 @@ void Object::Draw() {
 		glActiveTexture(GL_TEXTURE3);
 		glBindTexture(GL_TEXTURE_2D, textureID[3]);			
 		glUniform1i(m_shaders.bUniform, 3);
-		glActiveTexture(GL_TEXTURE4);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vboId);
 
@@ -176,7 +175,7 @@ void Object::Draw() {
 }
 
 void Object::Update(float deltatime) {
-	m_deltatime = deltatime;
+	m_deltatime += deltatime;
 }
 
 void Object::CleanUp() {
